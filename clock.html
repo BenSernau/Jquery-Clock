@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Website Clock
+	</title>
+</head>
+<body>
+	<form type = "submit" id = "alarm">
+		<input type = "time" value = "12:00" id = "setAlarm">
+		<button>set alarm</button>
+	</form>
+	<p id = "timeDisplay"></p>
+	<p id = "alarmDisplay"></p>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script>
+		var alarm;
+
+		$("#alarm").on("submit", function(event) {
+			event.preventDefault();
+			alarm = $("#setAlarm").val();
+		});
+
+		$(document).ready(function () {
+        	updateClock();
+		});
+
+		var updateClock = function() {
+			var $date = new Date($.now());
+			var hourNum = $date.getHours();
+			var minNum = $date.getMinutes();
+			var secNum = $date.getSeconds();
+
+			hourNum < 10 ? hourNum = "0" + hourNum : null;
+			minNum < 10 ? minNum = "0" + minNum : null;
+			secNum < 10 ? secNum = "0" + secNum : null;
+
+			var time = hourNum + ":" + minNum + ":" + secNum;
+
+			if (hourNum + ":" + minNum === alarm && secNum % 2 === 0) {
+				$("#alarmDisplay").text("ALARM");
+			}
+
+			else {
+				$("#alarmDisplay").text("");
+			}
+
+			$("#timeDisplay").text(time);
+		}
+
+		setInterval(updateClock, 1000);
+	</script>
+</body>
+</html>
